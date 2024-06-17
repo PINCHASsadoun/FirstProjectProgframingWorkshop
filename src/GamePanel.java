@@ -108,7 +108,7 @@ public class GamePanel extends JPanel {
                     repaint();
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
