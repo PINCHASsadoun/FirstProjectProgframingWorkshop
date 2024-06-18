@@ -28,8 +28,8 @@ public class GamePanel extends JPanel {
     private int[] cherryRow;
     private int[] cherryCol;
     private Direction lastAttemptedDirection = null;
-    private final int PACMAN_SPEED = 150;  // Pac-Man's speed (milliseconds)
-    private final int GHOST_SPEED = 200;   // Ghosts' speed (milliseconds)
+    private final int PACMAN_SPEED = 200;  // Pac-Man's speed (milliseconds)
+    private final int GHOST_SPEED = 300;   // Ghosts' speed (milliseconds)
     private boolean showReadyImage = true;
     private Image readyImage;
 
