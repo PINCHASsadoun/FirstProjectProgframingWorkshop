@@ -68,6 +68,21 @@ public class Map {
         }
         return map;
     }
+    public int[][] readTextFile1() {
+        String filePath = "resources/map1.txt";
+        String fileContent = importTextFile(filePath);
+
+        int[][] map = new int[rows][cols];
+        int count = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                map[i][j] = fileContent.charAt(count) - '0';
+                count++;
+            }
+        }
+        return map;
+    }
 
     private void fillMapFromMatrix(int[][] matrix) {
         for (int row = 0; row < rows; row++) {

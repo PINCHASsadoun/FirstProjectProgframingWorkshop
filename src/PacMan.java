@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.time.Duration;
+import java.util.Objects;
 
 public class PacMan {
     private int row;
@@ -40,19 +42,14 @@ public class PacMan {
         int startAngle = 45;
         int arcAngle = mouthOpen ? 270 : 360; // Open or close mouth
 
-        switch (direction) {
-            case UP:
-                startAngle = mouthOpen ? 135 : 90;
-                break;
-            case DOWN:
-                startAngle = mouthOpen ? 315 : 270;
-                break;
-            case LEFT:
-                startAngle = mouthOpen ? 225 : 180;
-                break;
-            case RIGHT:
-                startAngle = mouthOpen ? 45 : 0;
-                break;
+        if(Objects.requireNonNull(direction)==Direction.UP) {
+            startAngle = mouthOpen ? 135 : 90;
+        } else if (direction == Direction.DOWN) {
+            startAngle = mouthOpen ? 315 : 270;
+        } else if (direction == Direction.LEFT) {
+            startAngle = mouthOpen ? 225 : 180;
+        } else if (direction == Direction.RIGHT){
+            startAngle = mouthOpen ? 45:0;
         }
 
         g.fillArc(col * tileSize, row * tileSize, tileSize, tileSize, startAngle, arcAngle);

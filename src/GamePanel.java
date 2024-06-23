@@ -9,16 +9,22 @@ import java.util.List;
 public class GamePanel extends JPanel {
 
 
+    private Track track = new Track();//Benyamin
+    private boolean game = true;
+    private GameFrame gameFrame;
+
+
     public static final int LIVES_COUNT = 3;
     private int lives = LIVES_COUNT;
     private GameStatusUpdater gameStatusUpdater;
     private final int TILE_SIZE = 20;
-    private final Map map;
-    private final PacMan pacMan;
-    private final List<Ghost> ghosts;
-    private final List<Cherry> cherries;
-    private final List<Circle> circles;
-    private final List<Dot> dots;
+    private Map map;
+
+    private PacMan pacMan;
+    private List<Ghost> ghosts;
+    private List<Cherry> cherries;
+    private List<Circle> circles;
+    private List<Dot> dots;
     private boolean gameStarted;
     private boolean ghostsVulnerable;
     private Thread vulnerabilityThread;
@@ -29,12 +35,12 @@ public class GamePanel extends JPanel {
     private int[] cherryCol;
     private Direction lastAttemptedDirection = null;
     private final int PACMAN_SPEED = 200;  // Pac-Man's speed (milliseconds)
-    private final int GHOST_SPEED = 300;   // Ghosts' speed (milliseconds)
+    private final int GHOST_SPEED = 450;   // Ghosts' speed (milliseconds)
     private boolean showReadyImage = true;
     private Image readyImage;
 
-    public GamePanel(GameStatusUpdater gameStatusUpdater) {
-        this.gameStatusUpdater = gameStatusUpdater;
+
+    public void spawn2(){
         map = new Map(21, 37);
         pacMan = new PacMan(11, 18);
         ghosts = Arrays.asList(new Ghost(9, 17, "red.png"),
@@ -49,6 +55,28 @@ public class GamePanel extends JPanel {
         placeCherries(3); // Place 3 cherries on the map
         placeCircles(4);  // Place 4 circles on the map
         placeDots();
+    }
+    public void spawn1(){
+        map = new Map(5, 12);
+        pacMan = new PacMan(2, 2);
+        ghosts = Arrays.asList(new Ghost(4, 11, "red.png"));
+
+        cherries = new ArrayList<>();
+        circles = new ArrayList<>();
+        dots = new ArrayList<>();
+
+        placeCherries(3); // Place 3 cherries on the map
+        placeCircles(4);  // Place 4 circles on the map
+        placeDots();
+    }
+
+    public GamePanel(GameStatusUpdater gameStatusUpdater) {
+        track.main();//Benyamin
+
+
+        this.gameStatusUpdater = gameStatusUpdater;
+        spawn2();
+
 
         gameStarted = false;
         ghostsVulnerable = false;
@@ -79,13 +107,33 @@ public class GamePanel extends JPanel {
     }
 
     private void gameOver() {
-        JOptionPane.showConfirmDialog(this, "Game Over", "Game Over", JOptionPane.CLOSED_OPTION);
+        track.stop();
+        track.fail();
+        this.game=false;
+
+        if (JOptionPane.showConfirmDialog(this, "Game Over, try again?", "Game Over", JOptionPane.YES_NO_OPTION)==0){
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            topFrame.dispose();
+
+            String[] args = {};
+            Main.main(args);
+        }
+        else
+            System.exit(0);
+    }
+    private void win() {
+        track.stop();
+        track.win();
+        this.game=false;
+
+        JOptionPane.showConfirmDialog(this, "Win", "Congratulations", JOptionPane.CLOSED_OPTION);
         System.exit(0);
     }
 
+
     private void startGameThreads() {
         gameThread = new Thread(() -> {
-            while (true) {
+            while (this.game) {
                 if (gameStarted) {
                     for (Ghost ghost : ghosts) {
                         ghost.move(map, pacMan.getRow(), pacMan.getCol(), ghosts);
@@ -103,6 +151,8 @@ public class GamePanel extends JPanel {
         gameThread.start();
         Thread collisionThread = new Thread(() -> {
             while (true) {
+                if (dots.isEmpty())
+                    win();
                 if (gameStarted) {
                     checkVulnerableCollision();
                     repaint();
@@ -268,6 +318,7 @@ public class GamePanel extends JPanel {
                 lives--;
                 gameStatusUpdater.removeHeart();
                 if (lives <= 0) {
+
                     gameOver();
                 }
             }

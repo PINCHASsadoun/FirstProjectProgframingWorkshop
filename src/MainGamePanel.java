@@ -4,10 +4,13 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 public class MainGamePanel extends JPanel {
+
     GameStatusUpdaterBar gameStatusBar = new GameStatusUpdaterBar();
     GamePanel gamePanel = new GamePanel(gameStatusBar);
 
-    public MainGamePanel() {
+    public MainGamePanel(GameFrame gameFrame) {
+
+
         setLayout(new BorderLayout());
         add(gamePanel, BorderLayout.CENTER);
         add(gameStatusBar, BorderLayout.NORTH);

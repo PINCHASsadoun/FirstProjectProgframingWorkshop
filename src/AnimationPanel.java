@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class AnimationPanel extends JPanel {
+    private Track track = new Track(); //Benyamin
     public final int PANEL_WIDTH = 750;
     public final int PANEL_HEIGHT = 470;
     private int x = 0;
@@ -20,6 +21,8 @@ public class AnimationPanel extends JPanel {
     private Thread frameThread;
 
     public AnimationPanel(GameFrame gameframe) {
+        track.opening();//Benyamin
+
         this.gameframe = gameframe;
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
@@ -37,7 +40,9 @@ public class AnimationPanel extends JPanel {
         this.setLayout(null);
         this.add(frameButton);
 
-        frameButton.addActionListener(e -> gameframe.resetWindow());
+        frameButton.addActionListener(e -> {
+            track.stop();//Benyamin
+            gameframe.resetWindow();});
 
         // Load the background image
 //        ImageIcon backgroundIcon = new ImageIcon(getClass().getResource("background.JPG"));

@@ -16,16 +16,14 @@ public class GameFrame {
         frame.setVisible(true);
 
 
-
-
     }
-
     public void resetWindow() {
         frame.getContentPane().remove(animationPanel);
-        MainGamePanel mainGamePanel = new MainGamePanel();
+        MainGamePanel mainGamePanel = new MainGamePanel(this);
         frame.getContentPane().add(mainGamePanel);
 
         frame.revalidate();
         frame.repaint();
     }
+
 }
