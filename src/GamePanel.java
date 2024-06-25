@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class GamePanel extends JPanel {
@@ -89,7 +90,7 @@ public class GamePanel extends JPanel {
 
         cherries = new ArrayList<>();
         circles = new ArrayList<>();
-        dots = new ArrayList<>();
+        dots = new CopyOnWriteArrayList<>();
 
         placeCherries(3); // Place 3 cherries on the map
         placeCircles(4);  // Place 4 circles on the map
@@ -106,7 +107,7 @@ public class GamePanel extends JPanel {
 
         cherries = new ArrayList<>();
         circles = new ArrayList<>();
-        dots = new ArrayList<>();
+        dots = new CopyOnWriteArrayList<>();
 
         placeCherries(3); // Place 3 cherries on the map
         placeCircles(4);  // Place 4 circles on the map
