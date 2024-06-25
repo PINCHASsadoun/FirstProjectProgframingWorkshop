@@ -6,7 +6,7 @@ import java.awt.event.ComponentEvent;
 public class MainGamePanel extends JPanel {
 
     GameStatusUpdaterBar gameStatusBar = new GameStatusUpdaterBar();
-    GamePanel gamePanel = new GamePanel(gameStatusBar);
+    GamePanel gamePanel = new GamePanel(gameStatusBar, 1);
 
     public MainGamePanel(GameFrame gameFrame) {
 

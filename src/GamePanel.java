@@ -39,43 +39,16 @@ public class GamePanel extends JPanel {
     private boolean showReadyImage = true;
     private Image readyImage;
 
-
-    public void spawn2(){
-        map = new Map(21, 37);
-        pacMan = new PacMan(11, 18);
-        ghosts = Arrays.asList(new Ghost(9, 17, "red.png"),
-                new Ghost(9, 18, "cyan.png"),
-                new Ghost(9, 19, "orange.png"),
-                new Ghost(8, 18, "purple.png"));
-
-        cherries = new ArrayList<>();
-        circles = new ArrayList<>();
-        dots = new ArrayList<>();
-
-        placeCherries(3); // Place 3 cherries on the map
-        placeCircles(4);  // Place 4 circles on the map
-        placeDots();
-    }
-    public void spawn1(){
-        map = new Map(5, 12);
-        pacMan = new PacMan(2, 2);
-        ghosts = Arrays.asList(new Ghost(4, 11, "red.png"));
-
-        cherries = new ArrayList<>();
-        circles = new ArrayList<>();
-        dots = new ArrayList<>();
-
-        placeCherries(3); // Place 3 cherries on the map
-        placeCircles(4);  // Place 4 circles on the map
-        placeDots();
-    }
-
-    public GamePanel(GameStatusUpdater gameStatusUpdater) {
+    public GamePanel(GameStatusUpdater gameStatusUpdater, int mapNum) {
         track.main();//Benyamin
 
 
         this.gameStatusUpdater = gameStatusUpdater;
-        spawn2();
+
+        if (mapNum ==2)
+            spawn2();
+        if (mapNum ==1)
+            spawn1();
 
 
         gameStarted = false;
@@ -104,6 +77,40 @@ public class GamePanel extends JPanel {
             }
         });
 
+    }
+
+    public void spawn1(){
+        map = new Map(21, 37, 1);
+        pacMan = new PacMan(11, 18);
+        ghosts = Arrays.asList(new Ghost(9, 17, "red.png"),
+                new Ghost(9, 18, "cyan.png"),
+                new Ghost(9, 19, "orange.png"),
+                new Ghost(8, 18, "purple.png"));
+
+        cherries = new ArrayList<>();
+        circles = new ArrayList<>();
+        dots = new ArrayList<>();
+
+        placeCherries(3); // Place 3 cherries on the map
+        placeCircles(4);  // Place 4 circles on the map
+        placeDots();
+    }
+
+    public void spawn2(){
+        map = new Map(21, 37, 2);
+        pacMan = new PacMan(11, 18);
+        ghosts = Arrays.asList(new Ghost(9, 17, "red.png"),
+                new Ghost(9, 18, "cyan.png"),
+                new Ghost(9, 19, "orange.png"),
+                new Ghost(8, 18, "purple.png"));
+
+        cherries = new ArrayList<>();
+        circles = new ArrayList<>();
+        dots = new ArrayList<>();
+
+        placeCherries(3); // Place 3 cherries on the map
+        placeCircles(4);  // Place 4 circles on the map
+        placeDots();
     }
 
     private void gameOver() {
@@ -183,7 +190,7 @@ public class GamePanel extends JPanel {
                 col = random.nextInt(cols);
                 cherryRow[i] = row;
                 cherryCol[i] = col;
-            } while (!map.isPath(row, col) || !isEmpty(row, col, cherries));
+            } while (!map.isPath(row, col) || !isEmpty(row, col, cherries)&& !map.isHQ(row, col));
 
             cherries.add(new Cherry(row, col, "resources/cherry.png"));
         }

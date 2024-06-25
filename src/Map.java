@@ -13,7 +13,7 @@ public class Map {
     private final int hqColStart;
     private final int hqColEnd;
 
-    public Map(int rows, int cols) {
+    public Map(int rows, int cols, int mapNum) {
         this.rows = rows;
         this.cols = cols;
         this.hqRowStart = rows / 2 - 2;
@@ -21,10 +21,15 @@ public class Map {
         this.hqColStart = cols / 2 - 2;
         this.hqColEnd = cols / 2 + 2;
         map = new Color[rows][cols];
-        initMap();
+        if (mapNum == 1) {
+            initMap1();
+        }
+        if (mapNum == 2) {
+            initMap2();
+        }
     }
 
-    private void initMap() {
+    private void initMap2() {
         // Initialize the map with walls, paths, and HQ walls
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -38,11 +43,31 @@ public class Map {
                 }
             }
         }
-        int[][] colorMatrix = readTextFile();
+        int[][] colorMatrix = readTextFile2();
 
         // Fill the map based on the matrix
         fillMapFromMatrix(colorMatrix);
     }
+    private void initMap1() {
+        // Initialize the map with walls, paths, and HQ walls
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                // Outer walls
+                if (isHQWall(row, col)) {
+                    map[row][col] = Color.BLUE; // HQ walls
+                } else if (isHQGate(row, col)) {
+                    map[row][col] = Color.GREEN; // Gate path
+                } else {
+                    map[row][col] = Color.BLACK; // Paths
+                }
+            }
+        }
+        int[][] colorMatrix = readTextFile1();
+
+        // Fill the map based on the matrix
+        fillMapFromMatrix(colorMatrix);
+    }
+
 
     public static String importTextFile(String filePath) {
         try {
@@ -53,7 +78,7 @@ public class Map {
         }
     }
 
-    public int[][] readTextFile() {
+    public int[][] readTextFile2() {
         String filePath = "resources/mapMatrixVersion2.txt";
         String fileContent = importTextFile(filePath);
 
