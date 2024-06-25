@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Map {
+    
     private final int rows;
     private final int cols;
     private final Color[][] map;
