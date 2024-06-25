@@ -80,7 +80,7 @@ public class Map {
     }
 
     public int[][] readTextFile2() {
-        String filePath = "resources/mapMatrixVersion2.txt";
+        String filePath = "resources/map2.txt";
         String fileContent = importTextFile(filePath);
 
         int[][] map = new int[rows][cols];
